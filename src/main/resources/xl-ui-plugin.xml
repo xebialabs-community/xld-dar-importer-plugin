@@ -1,0 +1,7 @@
+<plugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://www.xebialabs.com/deployit/ui-plugin"
+xsi:schemaLocation="http://www.xebialabs.com/deployit/ui-plugin xl-ui-plugin.xsd">
+
+<menu id="dar-importer" label="Import" uri="/dar-importer/index.html" weight="13" />
+
+</plugin>

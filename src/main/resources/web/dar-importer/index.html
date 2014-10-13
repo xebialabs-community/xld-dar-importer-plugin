@@ -1,0 +1,165 @@
+<html>
+<head>
+
+	<!-- CSS styles -->
+    <link rel="stylesheet" href="css/print.css" type="text/css" media="print"/>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/result-table.css" media="screen,print"/>
+    <link rel="stylesheet" href="css/cc-fonts.css" media="screen,print"/>
+    <link rel="stylesheet" href="css/darimporter-plugin.css" media="screen"/>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+	<script>
+
+		function listRepos() {
+			$.ajax({
+				dataType: "json",
+				url: "/api/extension/dar-importer/listrepos",
+				crossDomain: true,
+				beforeSend : function(xhr) {
+          			var base64 = parent.getAuthToken()
+          			xhr.setRequestHeader("Authorization", base64);
+				},
+				success: genlist
+			});
+		}
+	
+		function genlist(data) {
+				var items = [];
+				$.each( data.entity, function( index, val ) {
+					var arr = val.split('/');
+					items.push("<option value=\""+val+"\">"+arr[arr.length - 1]+"</option>")
+
+				});
+
+				$( "#repos").empty().append( items );
+
+						
+		}
+
+		$(function() {
+			$( "#dar" ).autocomplete({
+			     source: function( request, response ) {
+			     	var repositoryId = $('#repos').find(":selected").val();
+			     	 $.ajax({
+			            dataType: "json",
+			            type : 'Get',
+			            url: '/api/extension/dar-importer/searchrepo',
+			            beforeSend : function(xhr) {
+          					var base64 = parent.getAuthToken()
+          					xhr.setRequestHeader("Authorization", base64);
+						},
+						data:
+            			{
+                			term: request.term,
+                			repoId: repositoryId
+            			},
+			            success: function(data) {
+			              $('#dar').removeClass('ui-autocomplete-loading');  // hide loading image
+
+			            response(data.entity);
+			          },
+			          error: function(data) {
+			              $('#dar').removeClass('ui-autocomplete-loading');  
+			          }
+        			});
+			      },
+			      minLength: 2,
+			      open: function() {
+
+			      },
+			      close: function() {
+
+			      },
+			      focus:function(event,ui) {
+
+			      },
+			      select: function( event, ui ) {
+			      	$("#dar").val(ui.item.value);
+
+			      }
+			     
+			});
+		});
+
+		function importDar() {
+			var repositoryId = $('#repos').find(":selected").val();
+			var darId = $('#dar').val();
+			$('#outputconsole').append("Importing dar file.\n");
+			importDarAjax(repositoryId,darId);
+		}
+
+		function importDarAjax(repositoryId,darId) {
+			$.ajax({
+				type: "Get",
+				url: "/api/extension/dar-importer/importdar",
+				crossDomain: true,
+				beforeSend : function(xhr) {
+          			var base64 = parent.getAuthToken()
+          			xhr.setRequestHeader("Authorization", base64);
+				},
+				data:{ packageId: darId, repoId: repositoryId },
+				success: function(data) {
+					$('#outputconsole').append("Dar import successful.\n");
+			    },
+			    error: function(data) {
+			    	$('#outputconsole').append("Dar import failed.\n");
+			    }
+			});
+		}
+
+		$( document ).ready(function() {
+			listRepos();
+		});
+
+
+	</script>
+</head>
+<body>
+	<div class="view-container">
+
+	<div class="sub-header">
+	    <div class="sub-header-top">
+	        <img class="xl-deploy-logo" src="img/xl-deploy-logo.png" alt title border="0"/>
+	        <span class="page-title">Dar importer</span>
+	    </div>
+	</div>
+
+	<div class="view" ng-controller="DarImporterController">
+		<div class="view-data">
+
+			<form id="importer">
+				<div class="row">
+        			<div class="col-xs-5">
+	                	<div class="select-filter-group">
+							<div class="input-group">
+								<span class="input-group-addon select-filter-group-label">Select repository: </span>
+								<select id="repos"></select>
+							</div>
+						</div>
+						<div class="select-filter-group">
+							<div class="input-group">
+								<span class="input-group-addon select-filter-group-label">Deployment Archive: </span>
+								<input id="dar" class="form-control select-filter-group-input" placeholder="artifact id" required>
+							</div>
+						</div>
+						<input id="import" type="submit" value="import" class="xl-button pull-right">				
+					</div>
+					<div class="col-xs-5">
+						<textarea id="outputconsole" cols="50" rows="7" disabled></textarea> 
+					</div>
+				</div>	
+			</form>
+			<script>
+				$( "#importer" ).submit(function( event ) {
+				  event.preventDefault();
+		    	  importDar();
+				});
+			</script>
+		</div>
+	</div>
+
+</body>
+</html>

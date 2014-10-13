@@ -1,0 +1,56 @@
+body {
+  color: #353833;
+  font-family: "OpenSans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  background-color: #757575;
+}
+
+.summary-block-small-indent, .page-title, .back-to-form, .print-button, .summary-command-links {
+  display: none !important;
+}
+
+.xl-deploy-logo img {
+  display: inline !important;
+  margin-left: 10px !important;
+  margin-top: 3px !important;
+  width: 109px;
+  height: 32px;
+}
+
+.sub-header-top {
+  background-color: #757575 !important;
+}
+
+.xl-form-control {
+  width: 70%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background: #fff none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+header.onlyprint {
+  display: none;
+}
+
+footer.onlyprint {
+  display: none;
+}
+
+.diff-del {
+  -webkit-print-color-adjust: exact;
+  background: #ffe6e6 !important;
+}
+
+.diff-ins {
+  -webkit-print-color-adjust: exact;
+  background: #e6ffe6 !important;
+}
