@@ -12,6 +12,7 @@ The dar importer plugin is a XL Deploy plugin that adds capability for searching
 
 * **Requirements**
 	* **XL Deploy** 4.5.0
+	* **Sonatype Nexus** with installed [Indexer Lucene Plugin](http://mvnrepository.com/artifact/org.sonatype.nexus.plugins/nexus-indexer-lucene-plugin)
 
 # Installation #
 
