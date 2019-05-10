@@ -6,7 +6,7 @@ notifications:
 deploy:
   provider: releases
   api_key:
-    secure: Ahoh2/0T4LydRx1Ks5hjDck/ec7NTiHqxfStqw5aF4rK0UFcdyhe22m0YLfL2zhgzzYqeHelnAXdBeTMkqUKriViLttyLVwQxNEfo1fwXshEAgrppInDK6+4BEsICnFTrMih12ymnjpayX+BJ2o4/rzYo0Irn1WZrsPWZgQ1PS0=
+    secure: gIL0pqrRqT/eFMzhrSjDPBERtosG52z56H36roNhjGeH+k1ZlPdmTMcum6gk6i9Ldya40ag15ukOFQicPNAqXORWf2YjgcZW6FAe8YDSz8vZj9DXJmOep+icdeJC46hOZlMGVKUGnYk/us4EKcKK3P5ZSYvzJcoCk0/0VA5j+BM=
   file: build/libs/xld-dar-importer-plugin-1.0.jar
   skip_cleanup: true
   on:
